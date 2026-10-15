@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI CodeStudio - 代码驱动 AI 视频生成平台</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Header Navbar -->
+  <header>
+    <div class="logo">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+        <polyline points="2 17 12 22 22 17"></polyline>
+        <polyline points="2 12 12 17 22 12"></polyline>
+      </svg>
+      <span>AI Code Studio</span>
+      <span class="logo-badge">Code-to-Video Engine</span>
+    </div>
+    <div class="nav-status">
+      <span class="status-dot"></span>
+      <span>AI API Server Online</span>
+    </div>
+  </header>
+
+  <main>
+    <!-- App Intro Banner -->
+    <section class="app-intro">
+      <h2>🎬 代码驱动型 AI 视频生成 Web 平台</h2>
+      <p>通过 API 调用 AI 大模型。AI 虽不直接生成二进制视频文件，但它通过<b>自动编写的高质量 Python/OpenCV 动态渲染代码</b>，为您实时合成极其逼真、富有影院光影特效与镜头运镜的 AI 视频作品！</p>
+    </section>
+
+    <!-- Main Studio Studio Grid -->
+    <div class="studio-grid">
+      <!-- Left Panel: Prompt & Options -->
+      <section class="control-panel">
+        <div class="panel-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span>Prompt 视频创意与参数</span>
+        </div>
+
+        <div class="form-group">
+          <label for="promptInput">
+            <span>输入视频描述 (Prompt)</span>
+          </label>
+          <textarea id="promptInput" placeholder="描述您想生成的 AI 视频画面...例如：'Cyberpunk city with glowing neon rain', 'Cosmic galaxy with particle swirl', 'Sunset ocean wave'"></textarea>
+        </div>
+
+        <!-- Presets -->
+        <div class="form-group">
+          <label><span>快捷 Prompt 灵感预设:</span></label>
+          <div class="preset-tags">
+            <button class="tag-btn" data-prompt="Cyberpunk city with flying vehicles, glowing cyan neon rain and perspective grid">赛博朋克霓虹城市</button>
+            <button class="tag-btn" data-prompt="Cosmic nebula galaxy explosion with particle swirl and central glowing star core">宇宙银河星云</button>
+            <button class="tag-btn" data-prompt="Cinematic golden sunset over ocean waves with ray traced sun reflections">日落海洋波浪</button>
+            <button class="tag-btn" data-prompt="Glowing energy portal with shockwave arc particles and magic aura">能量传送门</button>
+            <button class="tag-btn" data-prompt="3D floating geometric morphing shapes with volumetric lighting and depth of field">3D 几何演变</button>
+          </div>
+        </div>
+
+        <!-- Spec Selectors -->
+        <div class="options-grid">
+          <div class="form-group">
+            <label>画幅比例 (Aspect Ratio)</label>
+            <select id="aspectRatioSelect">
+              <option value="16:9" selected>16:9 宽屏影院</option>
+              <option value="9:16">9:16 竖屏短视频</option>
+              <option value="1:1">1:1 正方形</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>视频时长 (Duration)</label>
+            <select id="durationSelect">
+              <option value="2.0">2 秒 (快速调试)</option>
+              <option value="4.0" selected>4 秒 (推荐)</option>
+              <option value="6.0">6 秒</option>
+              <option value="8.0">8 秒</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>帧率 (FPS)</label>
+            <select id="fpsSelect">
+              <option value="15">15 fps</option>
+              <option value="30" selected>30 fps (流畅)</option>
+              <option value="60">60 fps (超高清流畅)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>分辨率 (Resolution)</label>
+            <select id="resolutionSelect">
+              <option value="720p" selected>720p (标清)</option>
+              <option value="1080p">1080p (高清)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Generate Button -->
+        <button id="generateBtn" class="btn-primary">
+          <span id="btnSpinner" class="spinner" style="display: none;"></span>
+          <span id="btnText">✨ 调用 API 生成 AI 视频</span>
+        </button>
+      </section>
+
+      <!-- Right Panel: Player / Code Viewer / Console Logs -->
+      <section class="workspace-panel">
+        <div class="workspace-tabs">
+          <button class="tab-btn active" data-tab="tabPlayer">📺 视频播放器 (Player)</button>
+          <button class="tab-btn" data-tab="tabCode">💻 AI 生成的代码 (Code Inspection)</button>
+          <button class="tab-btn" data-tab="tabLogs">⚡ 实时编译日志 (Console)</button>
+        </div>
+
+        <!-- Tab 1: Player -->
+        <div id="tabPlayer" class="tab-content active">
+          <div class="player-wrapper">
+            <video id="mainVideoPlayer" controls loop style="display: none;">
+              <source id="videoSource" src="" type="video/mp4">
+              您的浏览器不支持 HTML5 视频播放。
+            </video>
+            <div id="playerPlaceholder" class="player-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+                <line x1="7" y1="2" x2="7" y2="22"></line>
+                <line x1="17" y1="2" x2="17" y2="22"></line>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <line x1="2" y1="7" x2="7" y2="7"></line>
+                <line x1="2" y1="17" x2="7" y2="17"></line>
+                <line x1="17" y1="17" x2="22" y2="17"></line>
+                <line x1="17" y1="7" x2="22" y2="7"></line>
+              </svg>
+              <h3>等待 AI 视频生成</h3>
+              <p>在左侧输入 Prompt 并点击“调用 API 生成 AI 视频”，即可在此播放生成的影院级视频！</p>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 8px;">
+            <div id="videoTitle" style="font-weight: 600; color: #f3f4f6;"></div>
+            <div id="videoMetaSpecs" style="font-size: 0.8rem; color: var(--text-muted);"></div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Code Viewer -->
+        <div id="tabCode" class="tab-content">
+          <div class="code-actions">
+            <button id="copyCodeBtn" class="btn-secondary">📋 复制 Python 代码</button>
+            <button id="renderCustomBtn" class="btn-secondary">▶ 重新编译并渲染此代码</button>
+          </div>
+          <div class="code-container">
+            <pre><code id="codeDisplay"># 生成的 Python OpenCV/MoviePy 代码将显示在此处...</code></pre>
+          </div>
+        </div>
+
+        <!-- Tab 3: Logs -->
+        <div id="tabLogs" class="tab-content">
+          <div id="logsDisplay" class="logs-box">
+            <div class="log-entry"><span style="color:#6b7280;">[System]</span> <span>控制台初始化完成，等待 API 生成任务...</span></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- History Gallery Section -->
+    <section class="history-section">
+      <div class="panel-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        <span>已生成 AI 视频作品画廊 (History)</span>
+      </div>
+      <div id="historyGrid" class="history-grid">
+        <!-- Cards inserted dynamically -->
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

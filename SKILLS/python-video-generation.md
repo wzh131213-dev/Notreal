@@ -1,3 +1,8 @@
+---
+name: python-video-generation
+description: 指导 AI 大模型通过编写 Python 代码（使用 moviepy, Pillow, gTTS, OpenCV, numpy 等）生成媲美 Runway, Sora, Pika 等 AI 视频生成模型的精美、带声效缓动动画与专业排版的视频。
+---
+
 # Skill: Python Programmatic Video Generation (High-Quality AI-Grade Output)
 
 This skill guide enables an AI agent or LLM assistant to write Python code (using libraries like `moviepy`, `manim`, `opencv-python`, `pillow`, `gTTS`, `vlc`/`ffmpeg`, `matplotlib`, `rembg`, `numpy`, `librosa`) that generates professional, visual-rich, high-production-value videos directly from prompt descriptions, rivaling direct AI video generation models (like Runway, Sora, Pika).

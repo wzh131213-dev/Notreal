@@ -1,0 +1,6 @@
+{
+  "name": "token-saver",
+  "version": "1.0.0",
+  "description": "Skill plugin to optimize AI token consumption through concise outputs, efficient tool usage, and compressed context techniques.",
+  "skills": ["skills/token-saver/SKILL.md"]
+}

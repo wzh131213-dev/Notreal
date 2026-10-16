@@ -1,0 +1,6 @@
+{
+  "name": "audio-to-lrc",
+  "version": "1.0.0",
+  "description": "Convert MP3 audio files to LRC lyric format using Google Gemma/GenAI API.",
+  "main": "audio_to_lrc.py"
+}

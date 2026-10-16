@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Audio to LRC Converter using Google GenAI / Gemma API.
+Audio to LRC Converter using Google Gemini / GenAI API.
 Converts MP3 audio files into LRC lyrics format with timestamps.
 """
 
@@ -23,20 +23,19 @@ Strict requirements:
 
 
 class AudioToLRCConverter:
-    """Converter class for transforming audio files (MP3) to LRC format using Google GenAI API."""
+    """Converter class for transforming audio files (MP3) to LRC format using Google Gemini API."""
 
     def __init__(self, api_key: Optional[str] = None, model: str = "gemini-2.5-flash"):
         """
         Initialize the converter with API key and model.
 
         Args:
-            api_key: Optional Google GenAI API key. If not provided,
-                     will use GEMINI_API_KEY or GEMMA_API_KEY environment variable.
-            model: Gemini / Gemma model name to use.
+            api_key: Optional Google Gemini / GenAI API key. If not provided,
+                     will use GEMINI_API_KEY environment variable.
+            model: Gemini model name to use.
         """
         resolved_api_key = api_key or os.getenv("GEMINI_API_KEY") or os.getenv("GEMMA_API_KEY")
         if not resolved_api_key:
-            # Note: client initialization will raise error or work if default credentials exist
             self.client = genai.Client()
         else:
             self.client = genai.Client(api_key=resolved_api_key)
@@ -108,7 +107,7 @@ class AudioToLRCConverter:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Convert MP3 audio file into LRC lyrics file using Google Gemma/Gemini API."
+        description="Convert MP3 audio file into LRC lyrics file using Google Gemini API."
     )
     parser.add_argument(
         "-i", "--input", required=True, help="Path to input MP3 audio file"
@@ -120,7 +119,7 @@ def main():
         "-m", "--model", default="gemini-2.5-flash", help="Model name (default: gemini-2.5-flash)"
     )
     parser.add_argument(
-        "-k", "--api-key", help="Google GenAI API Key (optional, defaults to GEMINI_API_KEY or GEMMA_API_KEY env var)"
+        "-k", "--api-key", help="Google Gemini API Key (optional, defaults to GEMINI_API_KEY env var)"
     )
 
     args = parser.parse_args()

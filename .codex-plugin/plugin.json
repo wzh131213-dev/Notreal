@@ -2,7 +2,9 @@
   "name": "audio-to-lrc",
   "version": "1.0.0",
   "description": "Convert MP3 audio files to LRC lyric format using Google Gemini API.",
-  "author": "ChatGPT3",
+  "author": {
+    "name": "ChatGPT3"
+  },
   "main": "audio_to_lrc.py",
   "interface": {
     "displayName": "Audio to LRC Converter",

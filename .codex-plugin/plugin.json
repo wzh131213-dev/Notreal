@@ -1,6 +1,17 @@
 {
   "name": "audio-to-lrc",
   "version": "1.0.0",
-  "description": "Convert MP3 audio files to LRC lyric format using Google Gemma/GenAI API.",
-  "main": "audio_to_lrc.py"
+  "description": "Convert MP3 audio files to LRC lyric format using Google Gemini API.",
+  "main": "audio_to_lrc.py",
+  "interface": {
+    "displayName": "Audio to LRC Converter",
+    "shortDescription": "Converts MP3 audio files to synchronized LRC lyric files using Gemini API.",
+    "longDescription": "This plugin reads MP3 and other audio files and uses Google's Gemini/GenAI API to transcribe audio and output synchronized LRC lyrics with timestamps.",
+    "developerName": "ChatGPT3",
+    "category": "Audio & Speech",
+    "capabilities": [
+      "audio-transcription",
+      "lrc-generation"
+    ]
+  }
 }
